@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, HttpStatus, NotImplementedException, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, NotImplementedException, Post, Request, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { PassportLocalGuard } from './guards/passport-local.guard';
 
@@ -9,8 +9,9 @@ export class PassportAuthController {
     @HttpCode(HttpStatus.OK)
     @Post('login')
     @UseGuards(PassportLocalGuard)
-    login() {
-        return "Login Success";
+    login(@Request() request) {
+        // console.log("auth-v2/login", request.);
+        return this.authService.signIn(request.user);
     }
 
     @Get('me')
